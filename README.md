@@ -73,7 +73,6 @@ You will collaborate with a partner:
 
 ## Resources
 
-- [Workshop Materials](https://YOUR-GITHUB-PAGES-URL) ← Slides and setup guide
 - [Quarto Documentation](https://quarto.org)
 - [gtsummary Documentation](https://www.danieldsjoberg.com/gtsummary/)
 
