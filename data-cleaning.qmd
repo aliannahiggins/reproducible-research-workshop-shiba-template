@@ -24,8 +24,14 @@ library(here)
 ```{r}
 #| label: load-data
 
-# Load the raw data
-# TODO: Add data loading code during workshop
+# Load the NHANES package (contains the dataset we'll use)
+library(NHANES)
+
+# Load the NHANES data into our R environment
+data("NHANES")
+
+# Preview the first few rows to understand the data structure
+head(NHANES)
 ```
 
 ## Data Cleaning
@@ -33,11 +39,27 @@ library(here)
 ```{r}
 #| label: clean-data
 
-# TODO: Add data cleaning steps during workshop
-# - Select relevant variables
-# - Handle missing values
-# - Create derived variables
-# - Apply inclusion/exclusion criteria
+# Clean the NHANES data for our analysis
+data_clean <- NHANES |>
+  # Keep only the variables we need for this analysis
+  select(ID, Age, Gender, Race1, Education, BPSysAve, BMI, Weight) |>
+  # Restrict to adults (children have different BP norms)
+  filter(Age >= 20) |>
+  # Remove rows with any missing values (complete case analysis)
+  drop_na() |>
+  # Set education levels in logical order (for proper ordering in plots/tables)
+  mutate(
+    Education = factor(Education, levels = c(
+      "8th Grade", "9 - 11th Grade", "High School",
+      "Some College", "College Grad"
+    ))
+  )
+
+# Check the result: how many rows and columns?
+dim(data_clean)
+
+# Preview the cleaned data
+head(data_clean)
 ```
 
 ## Save Cleaned Data
@@ -45,8 +67,12 @@ library(here)
 ```{r}
 #| label: save-data
 
-# TODO: Save the cleaned dataset
-# write_csv(data_clean, here("data", "nhanes_clean.csv"))
+# Create results folder if it doesn't exist yet
+dir.create(here("results"), showWarnings = FALSE)
+
+# Save the cleaned data to the results folder
+# Other scripts will load this file instead of re-running data cleaning
+saveRDS(data_clean, here("results", "data_clean.rds"))
 ```
 
 ## Summary
