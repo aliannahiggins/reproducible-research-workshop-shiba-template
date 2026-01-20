@@ -1,6 +1,6 @@
 ---
 title: "Data Cleaning"
-author: "YOUR NAME"
+author: "Alianna Higgins"
 date: today
 format: html
 ---
